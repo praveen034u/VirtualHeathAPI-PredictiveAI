@@ -1,0 +1,57 @@
+
+To run the code locally, please follow below steps
+
+1- Install python in your local machine
+2- open the source code in visual studio code
+3- in VS code menu click on view tab and open the terminal 
+then run the commands one be one-  
+4- python -m venv venv 
+5- venv\Scripts\activate
+6- pip install -r requirements.txt
+
+once all packages are isntalled then run below command to start the app-
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+and then go to chrome browser and paste the belwo url 
+
+http://localhost:8000/docs
+
+Click on downward arrow button located in the same line towards right of the Post /Predict API, after clicking teh downward arrow it will show the api, now click on "try it out" button
+
+and then pass the below smaple input json or testing, 
+
+Here is the 2 sample input jsons -
+
+1- For diabetics prediction == yes, use below
+
+{
+  "Pregnancies": 6,
+  "Glucose": 148,
+  "BloodPressure": 72,
+  "SkinThickness": 35,
+  "Insulin": 0,
+  "BMI": 33.6,
+  "DiabetesPedigreeFunction": 0.627,
+  "Age": 50
+}
+ 
+ 2- For diabetics prediction == no, use below
+
+{
+  "Pregnancies": 1,
+  "Glucose": 85,
+  "BloodPressure": 66,
+  "SkinThickness": 29,
+  "Insulin": 0,
+  "BMI": 26.6,
+  "DiabetesPedigreeFunction": 0.351,
+  "Age": 31
+}
+
+Note: 
+main.py contains the logic for running the API with one person input data and trigger the trained model to get the result
+however, train_model.py contains the logic for training data and then and repacking the model and save the updated trained model into model.pkl, scaler.pkl and imputer.pkl files
+
+To run the train_model,py localy, please follow below steps [TBD]
+
+To deploy in AWS, please refer below steps- 
