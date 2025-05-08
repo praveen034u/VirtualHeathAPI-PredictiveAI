@@ -7,4 +7,6 @@ pandas
 transformers
 mangum
 pydantic
+torch
 python-multipart
+
