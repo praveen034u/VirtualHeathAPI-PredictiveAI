@@ -2,7 +2,7 @@ fastapi
 uvicorn
 requests
 numpy
-sklearn
+scikit-learn
 pandas
 transformers
 mangum
