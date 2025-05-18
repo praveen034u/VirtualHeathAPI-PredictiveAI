@@ -21,4 +21,4 @@ COPY . .
 # Let Cloud Run know what port to expose (optional, just for readability)
 EXPOSE 8080
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
