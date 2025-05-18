@@ -57,7 +57,6 @@ gh secret set REGION --body "$REGION"
 gh secret set GCP_REPO --body "$GCP_REPO"
 gh secret set IMAGE_NAME --body "$IMAGE_NAME"
 gh secret set SERVICE_NAME --body "$SERVICE_NAME"
-gh secret set VERTEX_AI_ENDPOINT --body "$VERTEX_AI_ENDPOINT"
 gh secret set GCP_SA_KEY --body "$GCP_SA_KEY"
 
 # ==== CLEANUP ====
