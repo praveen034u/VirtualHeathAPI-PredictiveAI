@@ -85,3 +85,20 @@ Go to: https://shell.cloud.google.com
 
 chmod +x setup_github_secrets.sh
 ./setup_github_secrets.sh
+
+
+# additional step-
+Step 2: Re-generate the Key & Base64 Encode
+Sometimes malformed or expired keys cause this issue.
+
+✅ Create a new key:
+gcloud iam service-accounts keys create key.json \
+  --iam-account=github-actions-deployer@dark-bit-459802-t7.iam.gserviceaccount.com
+
+✅ Encode it:
+base64 -w 0 key.json
+Copy this single-line base64 string into your GitHub secret: GCP_SA_KEY
+
+Replace the old one via:
+
+GitHub → Repo → Settings → Secrets → GCP_SA_KEY → Update value
