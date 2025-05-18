@@ -102,3 +102,10 @@ Copy this single-line base64 string into your GitHub secret: GCP_SA_KEY
 Replace the old one via:
 
 GitHub → Repo → Settings → Secrets → GCP_SA_KEY → Update value
+
+# Rebuild and Re-Test Locally
+docker build -t predictive-api-test .
+docker run -p 8080:8080 predictive-api-test
+✅ You should now see Uvicorn successfully start and be listening on http://0.0.0.0:8080.
+
+
