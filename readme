@@ -103,6 +103,15 @@ Replace the old one via:
 
 GitHub → Repo → Settings → Secrets → GCP_SA_KEY → Update value
 
+# run below command to increase the timeout, it can increase up to 900s
+gcloud run deploy predictive-api \
+  --source . \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --timeout=600s
+
+gcloud run services update predictive-api --timeout=600s --region=us-central1
+
 # Rebuild and Re-Test Locally
 docker build -t predictive-api-test .
 docker run -p 8080:8080 predictive-api-test
