@@ -54,4 +54,67 @@ however, train_model.py contains the logic for training data and then and repack
 
 To run the train_model,py localy, please follow below steps [TBD]
 
-To deploy in AWS, please refer below steps- 
+To deploy in CloudRun, please refer below steps- 
+
+# Authenticate:
+gcloud auth login
+gcloud config set project dark-bit-459802-t7
+
+# Enable APIs:
+gcloud services enable run.googleapis.com artifactregistry.googleapis.com aiplatform.googleapis.com
+
+## create repository, run below command in google cloud shell
+gcloud artifacts repositories create predictive-fastapi-repo --repository-format=docker --location=us-central1
+
+# run below command in google cloud shell
+  gcloud projects add-iam-policy-binding dark-bit-459802-t7 --member="serviceAccount:github-actions-deployer@dark-bit-459802-t7.iam.gserviceaccount.com" 
+  --role="roles/artifactregistry.writer"
+
+# run below command in google cloud shell
+export PROJECT_ID="dark-bit-459802-t7"
+export DEPLOYER_SA="github-actions-deployer@$PROJECT_ID.iam.gserviceaccount.com"
+export COMPUTE_SA="$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')-compute@developer.gserviceaccount.com"
+
+gcloud iam service-accounts add-iam-policy-binding $COMPUTE_SA \
+  --member="serviceAccount:$DEPLOYER_SA" \
+  --role="roles/iam.serviceAccountUser"
+
+
+# Run via Google Cloud Shell (No setup required)
+Go to: https://shell.cloud.google.com
+
+chmod +x setup_github_secrets.sh
+./setup_github_secrets.sh
+
+
+# additional step-
+Step 2: Re-generate the Key & Base64 Encode
+Sometimes malformed or expired keys cause this issue.
+
+✅ Create a new key:
+gcloud iam service-accounts keys create key.json \
+  --iam-account=github-actions-deployer@dark-bit-459802-t7.iam.gserviceaccount.com
+
+✅ Encode it:
+base64 -w 0 key.json
+Copy this single-line base64 string into your GitHub secret: GCP_SA_KEY
+
+Replace the old one via:
+
+GitHub → Repo → Settings → Secrets → GCP_SA_KEY → Update value
+
+# run below command to increase the timeout, it can increase up to 900s
+gcloud run deploy predictive-api \
+  --source . \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --timeout=600s
+
+gcloud run services update predictive-api --timeout=600s --region=us-central1
+
+# Rebuild and Re-Test Locally
+docker build -t predictive-api-test .
+docker run -p 8080:8080 predictive-api-test
+✅ You should now see Uvicorn successfully start and be listening on http://0.0.0.0:8080.
+
+
