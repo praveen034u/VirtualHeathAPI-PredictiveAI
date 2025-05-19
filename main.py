@@ -36,6 +36,10 @@ def predict_diabetes(data: HealthInput):
         data.Age
     ]])
 
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
     # Transform input
     input_imputed = imputer.transform(input_array)
     input_scaled = scaler.transform(input_imputed)
