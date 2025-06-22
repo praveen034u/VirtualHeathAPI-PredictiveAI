@@ -8,7 +8,7 @@ import traceback
 
 app = FastAPI()
 
-# --- Load models and preprocessors from main1.py ---
+# ---Load models and preprocessors from main1.py ---
 with open("imputer.pkl", "rb") as f:
     imputer = pickle.load(f)
 with open("scaler.pkl", "rb") as f:
